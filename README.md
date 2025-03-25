@@ -85,5 +85,8 @@ This is the place for you to write reflections:
 ### Mandatory (Subscriber) Reflections
 
 #### Reflection Subscriber-1
+1. RwLock is necessary for this case because we need to allow multiple readers to access the Vec. RwLock allows multiple readers to access the data at the same time, but only one writer can access the data at a time. We need to allow multiple instances of the receiver to read the notifications at the same time. If we use Mutex, only one thread can access the data at a time.
+
+2. Rust does not allow us to mutate the content of a static variable because it is not thread-safe. To safely allow mutation of global state in Rust, we must wrap the data in types that provide interior mutability (like a Mutex, RwLock, or use thread-safe collections such as DashMap). The lazy_static crate also one of the way to safely initialize these static variables at runtime while still enforcing Rust’s safety guarantees. 
 
 #### Reflection Subscriber-2
